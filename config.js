@@ -8,7 +8,7 @@ module.exports = {
   SPORT: 'Badminton',
   CITY: 'Hyderabad',
 
-  // Poll every 5 minutes
+  // Poll every 1 hour
   POLL_INTERVAL: '0 * * * *',
 
   // Notification

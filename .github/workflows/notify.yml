@@ -1,0 +1,34 @@
+name: Playo Notifier
+
+on:
+ schedule:
+ - cron: '0 * * * *' # every hour
+ workflow_dispatch: # manual trigger for testing
+
+jobs:
+ notify:
+ runs-on: ubuntu-latest
+ steps:
+ - uses: actions/checkout@v4
+
+ - uses: actions/setup-node@v4
+ with:
+ node-version: 20
+
+ - name: Restore seen games cache
+ uses: actions/cache@v4
+ with:
+ path: seen-games.json
+ key: seen-games
+
+ - run: npm install
+
+ - name: Run notifier
+ run: node index.js
+ env:
+ PLAYO_API_URL: ${{ secrets.PLAYO_API_URL }}
+ PLAYO_AUTH_HEADER: ${{ secrets.PLAYO_AUTH_HEADER }}
+ PLAYO_EXTRA_HEADERS: ${{ secrets.PLAYO_EXTRA_HEADERS }}
+ GMAIL_USER: ${{ secrets.GMAIL_USER }}
+ GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+ 
